@@ -71,6 +71,22 @@ body,
     --ring: 24 5.7% 82.9%;
   }
 }
+
+.cl-formButtonPrimary {
+  font-size: 14px;
+  text-transform: none;
+  background-color: #6366F1;
+}
+ 
+.cl-formButtonPrimary:hover,
+.cl-formButtonPrimary:focus,
+.cl-formButtonPrimary:active {
+  background-color: #6366F1;
+}
+
+.cl-footerActionLink, .cl-internal-15amzqo {
+  color: #6366F1;
+}
  
 @layer base {
   * {
