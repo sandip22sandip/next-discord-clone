@@ -4,7 +4,7 @@ generator client {
 
 datasource db {
   provider = "mysql"
-  url = env("DATABASE_URL")
+  url = "mysql://synrgisechat:ZWZI0S7twwmTEQ6O@192.168.0.11/chat_app_staging"
   relationMode = "prisma"
 }
 
