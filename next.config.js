@@ -3,17 +3,15 @@ const nextConfig = {
   webpack: (config) => {
     config.externals.push({
       "utf-8-validate": "commonjs utf-8-validate",
-      bufferutil: "commonjs bufferutil"
+      bufferutil: "commonjs bufferutil",
     });
 
     return config;
   },
   images: {
-    domains: [
-      "uploadthing.com",
-      "utfs.io"
-    ]
-  }
-}
+    domains: ["uploadthing.com", "utfs.io"],
+  },
+  swcMinify: false,
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;
