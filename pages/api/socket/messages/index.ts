@@ -1,8 +1,10 @@
 import { NextApiRequest } from "next";
 
 import { NextApiResponseServerIo } from "@/types";
-import { currentProfilePages } from "@/lib/current-profile-pages";
 import { db } from "@/lib/db";
+
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/utils/auth";
 
 export default async function handler(
   req: NextApiRequest,
@@ -13,7 +15,19 @@ export default async function handler(
   }
 
   try {
-    const profile = await currentProfilePages(req);
+
+    const session = await getServerSession(req, res, authOptions);
+
+    if (!session?.user?.email) {
+      return res.status(401).json({ error: "Unauthorized" });
+    }
+
+    const profile = await db.profile.findUnique({
+      where: {
+        userId: session.user.email,
+      },
+    });
+
     const { content, fileUrl } = req.body;
     const { serverId, channelId } = req.query;
     

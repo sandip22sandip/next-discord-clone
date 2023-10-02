@@ -2,19 +2,32 @@ import { NextApiRequest } from "next";
 import { MemberRole } from "@prisma/client";
 
 import { NextApiResponseServerIo } from "@/types";
-import { currentProfilePages } from "@/lib/current-profile-pages";
 import { db } from "@/lib/db";
+
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/utils/auth";
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponseServerIo,
+  res: NextApiResponseServerIo
 ) {
   if (req.method !== "DELETE" && req.method !== "PATCH") {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
   try {
-    const profile = await currentProfilePages(req);
+    const session = await getServerSession(req, res, authOptions);
+
+    if (!session?.user?.email) {
+      return res.status(401).json({ error: "Unauthorized" });
+    }
+
+    const profile = await db.profile.findUnique({
+      where: {
+        userId: session.user.email,
+      },
+    });
+
     const { directMessageId, conversationId } = req.query;
     const { content } = req.body;
 
@@ -33,34 +46,37 @@ export default async function handler(
           {
             memberOne: {
               profileId: profile.id,
-            }
+            },
           },
           {
             memberTwo: {
               profileId: profile.id,
-            }
-          }
-        ]
+            },
+          },
+        ],
       },
       include: {
         memberOne: {
           include: {
             profile: true,
-          }
+          },
         },
         memberTwo: {
           include: {
             profile: true,
-          }
-        }
-      }
-    })
+          },
+        },
+      },
+    });
 
     if (!conversation) {
       return res.status(404).json({ error: "Conversation not found" });
     }
 
-    const member = conversation.memberOne.profileId === profile.id ? conversation.memberOne : conversation.memberTwo;
+    const member =
+      conversation.memberOne.profileId === profile.id
+        ? conversation.memberOne
+        : conversation.memberTwo;
 
     if (!member) {
       return res.status(404).json({ error: "Member not found" });
@@ -75,10 +91,10 @@ export default async function handler(
         member: {
           include: {
             profile: true,
-          }
-        }
-      }
-    })
+          },
+        },
+      },
+    });
 
     if (!directMessage || directMessage.deleted) {
       return res.status(404).json({ error: "Message not found" });
@@ -107,10 +123,10 @@ export default async function handler(
           member: {
             include: {
               profile: true,
-            }
-          }
-        }
-      })
+            },
+          },
+        },
+      });
     }
 
     if (req.method === "PATCH") {
@@ -129,10 +145,10 @@ export default async function handler(
           member: {
             include: {
               profile: true,
-            }
-          }
-        }
-      })
+            },
+          },
+        },
+      });
     }
 
     const updateKey = `chat:${conversation.id}:messages:update`;

@@ -1,19 +1,26 @@
-import { auth } from "@clerk/nextjs";
-
 import { db } from "@/lib/db";
+import getSession from "./getSession";
 
 export const currentProfile = async () => {
-  const { userId } = auth();
+  try {
+    const session = await getSession();
 
-  if (!userId) {
+    if (!session?.user?.email) {
+      return null;
+    }
+
+    const currentUser = await db.profile.findUnique({
+      where: {
+        userId: session.user.email,
+      },
+    });
+
+    if (!currentUser) {
+      return null;
+    }
+
+    return currentUser;
+  } catch (error: any) {
     return null;
   }
-
-  const profile = await db.profile.findUnique({
-    where: {
-      userId
-    }
-  });
-
-  return profile;
-}
+};

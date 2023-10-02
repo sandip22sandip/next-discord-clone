@@ -35,7 +35,7 @@ export const ServerSidebar = async ({
   const profile = await currentProfile();
 
   if (!profile) {
-    return redirect("/");
+    return redirect("/sign-in");
   }
 
   const server = await db.server.findUnique({

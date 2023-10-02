@@ -88,3 +88,12 @@ Running commands with npm `npm run [command]`
 | command         | description                              |
 | :-------------- | :--------------------------------------- |
 | `dev`           | Starts a development instance of the app |
+
+## Removed hidden Class from here:-
+<!-- <div className="hidden md:flex h-full w-60 z-20 flex-col fixed inset-y-0">
+  <ServerSidebar serverId={params.serverId} />
+</div>
+
+<div className="hidden md:flex h-full w-[72px] z-30 flex-col fixed inset-y-0">
+  <NavigationSidebar />
+</div> -->
