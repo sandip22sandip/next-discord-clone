@@ -75,7 +75,7 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
   const isComplete = requiredFields.every(Boolean);
 
   return (
-    <>
+    <div className="dark:bg-gray-900 dark:text-white min-h-screen">
       {!course.isPublished && (
         <Banner label="This course is unpublished. It will not be visible to the students." />
       )}
@@ -136,7 +136,7 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

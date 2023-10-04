@@ -18,7 +18,9 @@ const AnalyticsPage = async () => {
   const { data, totalRevenue, totalSales } = await getAnalytics(userId);
 
   return (
-    <div className="p-6">
+    <div className="p-6 dark:bg-gray-900">
+      {" "}
+      {/* Apply dark background */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
         <DataCard label="Total Revenue" value={totalRevenue} shouldFormat />
         <DataCard label="Total Sales" value={totalSales} />

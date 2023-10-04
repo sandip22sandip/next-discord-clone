@@ -50,7 +50,7 @@ const ChapterIdPage = async ({
   const isComplete = requiredFields.every(Boolean);
 
   return (
-    <>
+    <div className="dark:bg-gray-900 dark:text-white min-h-screen">
       {!chapter.isPublished && (
         <Banner
           variant="warning"
@@ -126,7 +126,7 @@ const ChapterIdPage = async ({
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  Bar,
-  BarChart,
-  ResponsiveContainer,
-  XAxis,
-  YAxis,
-} from "recharts";
+import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
 
 import { Card } from "@/components/ui/card";
 
@@ -17,11 +11,11 @@ interface ChartProps {
   }[];
 }
 
-export const Chart = ({
-  data
-}: ChartProps) => {
+export const Chart = ({ data }: ChartProps) => {
   return (
-    <Card>
+    <Card className="dark:bg-gray-900">
+      {" "}
+      {/* Apply dark background */}
       <ResponsiveContainer width="100%" height={350}>
         <BarChart data={data}>
           <XAxis
@@ -38,13 +32,9 @@ export const Chart = ({
             axisLine={false}
             tickFormatter={(value) => `$${value}`}
           />
-          <Bar
-            dataKey="total"
-            fill="#0369a1"
-            radius={[4, 4, 0, 0]}
-          />
+          <Bar dataKey="total" fill="#0369a1" radius={[4, 4, 0, 0]} />
         </BarChart>
       </ResponsiveContainer>
     </Card>
-  )
-}
+  );
+};

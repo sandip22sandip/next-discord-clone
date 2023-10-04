@@ -14,13 +14,13 @@ interface CourseProgressButtonProps {
   courseId: string;
   isCompleted?: boolean;
   nextChapterId?: string;
-};
+}
 
 export const CourseProgressButton = ({
   chapterId,
   courseId,
   isCompleted,
-  nextChapterId
+  nextChapterId,
 }: CourseProgressButtonProps) => {
   const router = useRouter();
   const confetti = useConfettiStore();
@@ -30,9 +30,12 @@ export const CourseProgressButton = ({
     try {
       setIsLoading(true);
 
-      await axios.put(`/api/courses/${courseId}/chapters/${chapterId}/progress`, {
-        isCompleted: !isCompleted
-      });
+      await axios.put(
+        `/api/courses/${courseId}/chapters/${chapterId}/progress`,
+        {
+          isCompleted: !isCompleted,
+        }
+      );
 
       if (!isCompleted && !nextChapterId) {
         confetti.onOpen();
@@ -49,9 +52,9 @@ export const CourseProgressButton = ({
     } finally {
       setIsLoading(false);
     }
-  }
+  };
 
-  const Icon = isCompleted ? XCircle : CheckCircle
+  const Icon = isCompleted ? XCircle : CheckCircle;
 
   return (
     <Button
@@ -59,10 +62,10 @@ export const CourseProgressButton = ({
       disabled={isLoading}
       type="button"
       variant={isCompleted ? "outline" : "success"}
-      className="w-full md:w-auto"
+      className="w-full md:w-auto bg-green-500 dark:bg-green-700 text-white dark:text-gray-200 hover:bg-green-600 dark:hover:bg-green-800"
     >
       {isCompleted ? "Not completed" : "Mark as complete"}
       <Icon className="h-4 w-4 ml-2" />
     </Button>
-  )
-}
+  );
+};

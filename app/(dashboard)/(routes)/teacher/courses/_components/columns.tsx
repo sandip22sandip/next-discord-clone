@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
-import { Course } from "@prisma/client"
-import { ColumnDef } from "@tanstack/react-table"
-import { ArrowUpDown, MoreHorizontal, Pencil } from "lucide-react"
+import { Course } from "@prisma/client";
+import { ColumnDef } from "@tanstack/react-table";
+import { ArrowUpDown, MoreHorizontal, Pencil } from "lucide-react";
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
@@ -10,7 +10,7 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuTrigger
+  DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
@@ -23,11 +23,12 @@ export const columns: ColumnDef<Course>[] = [
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="dark:hover:bg-gray-700"
         >
           Title
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
-      )
+      );
     },
   },
   {
@@ -37,21 +38,22 @@ export const columns: ColumnDef<Course>[] = [
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="dark:hover:bg-gray-700"
         >
           Price
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
-      )
+      );
     },
     cell: ({ row }) => {
       const price = parseFloat(row.getValue("price") || "0");
       const formatted = new Intl.NumberFormat("en-US", {
         style: "currency",
-        currency: "USD"
+        currency: "USD",
       }).format(price);
 
-      return <div>{formatted}</div>
-    }
+      return <div>{formatted}</div>;
+    },
   },
   {
     accessorKey: "isPublished",
@@ -60,24 +62,27 @@ export const columns: ColumnDef<Course>[] = [
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="dark:hover:bg-gray-700"
         >
           Published
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
-      )
+      );
     },
     cell: ({ row }) => {
       const isPublished = row.getValue("isPublished") || false;
 
       return (
-        <Badge className={cn(
-          "bg-slate-500",
-          isPublished && "bg-sky-700"
-        )}>
+        <Badge
+          className={cn(
+            "bg-slate-500 dark:bg-white",
+            isPublished && "bg-sky-700 dark:bg-green-600"
+          )}
+        >
           {isPublished ? "Published" : "Draft"}
         </Badge>
-      )
-    }
+      );
+    },
   },
   {
     id: "actions",
@@ -87,7 +92,10 @@ export const columns: ColumnDef<Course>[] = [
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-4 w-8 p-0">
+            <Button
+              variant="ghost"
+              className="h-4 w-8 p-0 dark:hover:bg-gray-700"
+            >
               <span className="sr-only">Open menu</span>
               <MoreHorizontal className="h-4 w-4" />
             </Button>
@@ -101,7 +109,7 @@ export const columns: ColumnDef<Course>[] = [
             </Link>
           </DropdownMenuContent>
         </DropdownMenu>
-      )
-    }
-  }
-]
+      );
+    },
+  },
+];
