@@ -10,5 +10,9 @@ export const config = {
   matcher: [
     "/conversations/:path*",
     "/servers/:path*",
+    "/",
+    "/search/:path*",
+    "/courses/:path*",
+    "/teamchat/:path*"
   ]
 };

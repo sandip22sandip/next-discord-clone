@@ -9,6 +9,7 @@ import { SocketProvider } from "@/components/providers/socket-provider";
 import { QueryProvider } from "@/components/providers/query-provider";
 import AuthProvider from "./(auth)/components/AuthProvider";
 import ToasterProvider from "@/components/providers/toast-provider";
+import { ConfettiProvider } from "@/components/providers/confetti-provider";
 
 const font = Open_Sans({ subsets: ["latin"] });
 
@@ -27,13 +28,14 @@ export default function RootLayout({
       <body className={cn(font.className, "bg-white dark:bg-[#313338]")}>
         <ThemeProvider
           attribute="class"
-          defaultTheme="dark"
-          enableSystem={false}
+          defaultTheme="light"
+          enableSystem={true}
           storageKey="discord-theme"
         >
           <AuthProvider>
             <SocketProvider>
               <ToasterProvider />
+              <ConfettiProvider />
               <ModalProvider />
               <QueryProvider>{children}</QueryProvider>
             </SocketProvider>
