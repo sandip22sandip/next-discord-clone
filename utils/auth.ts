@@ -5,6 +5,19 @@ import GoogleProvider from "next-auth/providers/google";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 
 import { db } from "@/lib/db";
+import { Profile } from "@prisma/client";
+
+declare module "next-auth" {
+  interface Session {
+    user: Profile
+  }
+}
+declare module "next-auth/jwt" {
+  interface JWT {
+    isAdmin: boolean;
+    imageUrl: string;
+  }
+}
 
 export const authOptions: AuthOptions = {
   adapter: PrismaAdapter(db),
@@ -45,6 +58,23 @@ export const authOptions: AuthOptions = {
     strategy: "jwt",
   },
   secret: process.env.NEXTAUTH_SECRET,
+  callbacks: {
+    async session({ token, session }) {
+      if (token) {
+        session.user.isAdmin = token.isAdmin;
+        session.user.imageUrl = token.imageUrl;
+      }
+      return session;
+    },
+    async jwt({ token }) {
+      const userInDb = await db.profile.findUnique({
+        where: { userId: token.email! },
+      });
+      token.isAdmin = userInDb?.isAdmin!;
+      token.imageUrl = userInDb?.imageUrl!;
+      return token;
+    },
+  },
 };
 
 const handler = NextAuth(authOptions);

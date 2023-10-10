@@ -5,20 +5,31 @@ import { LogOut } from "lucide-react";
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
-import { isTeacher } from "@/lib/teacher";
 
 import { SearchInput } from "./search-input";
 import { useSession } from "next-auth/react";
 import { ModeToggle } from "./mode-toggle";
+import UserAccountNav from "./user-account-nav";
 
 export const NavbarRoutes = () => {
   const session = useSession();
-
   const pathname = usePathname();
+
+  const isAdmin = session?.data?.user?.isAdmin;
 
   const isTeacherPage = pathname?.startsWith("/teacher");
   const isCoursePage = pathname?.includes("/courses");
   const isSearchPage = pathname === "/search";
+
+  const user: {
+    email: string | undefined;
+    name: string | undefined;
+    imageUrl: string | undefined;
+  } = {
+    email: session?.data?.user?.email!,
+    name: session?.data?.user?.name!,
+    imageUrl: session?.data?.user?.imageUrl!,
+  };
 
   return (
     <>
@@ -35,7 +46,7 @@ export const NavbarRoutes = () => {
               Exit
             </Button>
           </Link>
-        ) : isTeacher(session?.data?.user?.email) ? (
+        ) : isAdmin ? (
           <Link href="/teacher/courses">
             <Button size="sm" variant="ghost">
               Teacher mode
@@ -49,8 +60,8 @@ export const NavbarRoutes = () => {
         </Link>
         <div className="pb-3 mt-auto flex items-center flex-col gap-y-4">
           <ModeToggle />
-          {/* <Signout user={profile} /> */}
         </div>
+        <UserAccountNav user={user} />
       </div>
     </>
   );
