@@ -1,3 +1,4 @@
+import bcrypt from "bcrypt";
 import NextAuth, { AuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GithubProvider from "next-auth/providers/github";
@@ -9,7 +10,7 @@ import { Profile } from "@prisma/client";
 
 declare module "next-auth" {
   interface Session {
-    user: Profile
+    user: Profile;
   }
 }
 declare module "next-auth/jwt" {
@@ -45,7 +46,16 @@ export const authOptions: AuthOptions = {
           where: { userId: credentials.userId },
         });
 
-        if (!user) {
+        if (!user || !user?.hashedPassword) {
+          throw new Error("Invalid credentials");
+        }
+
+        const isCorrectPassword = await bcrypt.compare(
+          credentials.password,
+          user.hashedPassword
+        );
+
+        if (!isCorrectPassword) {
           throw new Error("Invalid credentials");
         }
 
