@@ -9,9 +9,9 @@ export const currentProfile = async () => {
       return null;
     }
 
-    const currentUser = await db.profile.findUnique({
+    const currentUser = await db.user.findUnique({
       where: {
-        userId: session.user.email,
+        email: session.user.email,
       },
     });
 

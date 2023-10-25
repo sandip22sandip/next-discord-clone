@@ -21,9 +21,9 @@ export default async function handler(
       return res.status(401).json({ error: "Unauthorized" });
     }
 
-    const profile = await db.profile.findUnique({
+    const profile = await db.user.findUnique({
       where: {
-        userId: session.user.email,
+        email: session.user.email,
       },
     });
 

@@ -11,7 +11,7 @@ export async function POST(req: Request) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
-    const userId = profile.userId;
+    const userId = profile.email;
     const isAdmin = profile?.isAdmin;
 
     const { title } = await req.json();

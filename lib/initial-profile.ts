@@ -13,9 +13,9 @@ export const initialProfile = async () => {
       return null;
     }
 
-    const currentUser = await db.profile.findUnique({
+    const currentUser = await db.user.findUnique({
       where: {
-        userId: session.user.email,
+        email: session.user.email,
       },
     });
 
@@ -29,7 +29,7 @@ export const initialProfile = async () => {
     //   data: {
     //     userId: user.id,
     //     name: `${user.firstName} ${user.lastName}`,
-    //     imageUrl: user.imageUrl,
+    //     image: user.image,
     //     email: user.emailAddresses[0].emailAddress
     //   }
     // });

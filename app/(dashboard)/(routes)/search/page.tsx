@@ -18,7 +18,7 @@ interface SearchPageProps {
 const SearchPage = async ({ searchParams }: SearchPageProps) => {
   const profile = await currentProfile();
 
-  const userId = profile?.userId;
+  const userId = profile?.email;
 
   if (!userId) {
     return redirect("/");

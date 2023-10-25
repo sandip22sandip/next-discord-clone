@@ -56,7 +56,7 @@ const MemberIdPage = async ({ params, searchParams }: MemberIdPageProps) => {
   return (
     <div className="bg-white dark:bg-[#313338] flex flex-col h-full">
       <ChatHeader
-        imageUrl={otherMember.profile.imageUrl}
+        imageUrl={otherMember.profile.image!}
         name={otherMember.profile.name}
         serverId={params.serverId}
         type="conversation"

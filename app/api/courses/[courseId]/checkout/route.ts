@@ -16,7 +16,7 @@ export async function POST(
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
-    const userId = profile.userId;
+    const userId = profile?.email;
 
     const course = await db.course.findUnique({
       where: {
@@ -28,7 +28,7 @@ export async function POST(
     const purchase = await db.purchase.findUnique({
       where: {
         userId_courseId: {
-          userId: profile.userId,
+          userId: profile.email,
           courseId: params.courseId,
         },
       },
@@ -58,7 +58,7 @@ export async function POST(
 
     let stripeCustomer = await db.stripeCustomer.findUnique({
       where: {
-        userId: profile.userId,
+        userId: profile.email,
       },
       select: {
         stripeCustomerId: true,
@@ -72,7 +72,7 @@ export async function POST(
 
       stripeCustomer = await db.stripeCustomer.create({
         data: {
-          userId: profile.userId,
+          userId: profile.email,
           stripeCustomerId: customer.id,
         },
       });
@@ -86,7 +86,7 @@ export async function POST(
       cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/courses/${course.id}?canceled=1`,
       metadata: {
         courseId: course.id,
-        userId: profile.userId,
+        userId: profile.email,
       },
     });
 

@@ -23,7 +23,7 @@ model Account {
   id_token          String?
   session_state     String?
 
-  user Profile @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
 }
@@ -33,16 +33,15 @@ model Session {
   sessionToken String   @unique
   userId       String
   expires      DateTime
-  user         Profile  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
-model Profile {
+model User {
   id             String    @id @default(uuid()) @map("_id")
-  userId         String    @unique
   name           String
   email          String    @unique
   emailVerified  DateTime?
-  imageUrl       String?
+  image          String?
   hashedPassword String?
   isAdmin        Boolean   @default(false)
 
@@ -63,7 +62,7 @@ model Server {
   inviteCode String @unique
 
   profileId String
-  profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  profile   User   @relation(fields: [profileId], references: [id], onDelete: Cascade)
 
   members  Member[]
   channels Channel[]
@@ -85,7 +84,7 @@ model Member {
   role MemberRole @default(GUEST)
 
   profileId String
-  profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  profile   User   @relation(fields: [profileId], references: [id], onDelete: Cascade)
 
   serverId String
   server   Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
@@ -115,7 +114,7 @@ model Channel {
   type ChannelType @default(TEXT)
 
   profileId String
-  profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  profile   User   @relation(fields: [profileId], references: [id], onDelete: Cascade)
 
   serverId String
   server   Server @relation(fields: [serverId], references: [id], onDelete: Cascade)

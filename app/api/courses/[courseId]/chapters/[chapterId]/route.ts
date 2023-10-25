@@ -20,7 +20,7 @@ export async function DELETE(
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
-    const userId = profile.userId;
+    const userId = profile?.email;
 
     if (!userId) {
       return new NextResponse("Unauthorized", { status: 401 });
@@ -107,7 +107,7 @@ export async function PATCH(
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
-    const userId = profile.userId;
+    const userId = profile.email;
 
     if (!userId) {
       return new NextResponse("Unauthorized", { status: 401 });

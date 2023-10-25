@@ -5,7 +5,7 @@ import axios from "axios";
 import qs from "query-string";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Member, MemberRole, Profile } from "@prisma/client";
+import { Member, MemberRole, User } from "@prisma/client";
 import { Edit, FileIcon, ShieldAlert, ShieldCheck, Trash } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -28,7 +28,7 @@ interface ChatItemProps {
   id: string;
   content: string;
   member: Member & {
-    profile: Profile;
+    profile: User;
   };
   timestamp: string;
   fileUrl: string | null;
@@ -131,7 +131,7 @@ export const ChatItem = ({
     <div className="relative group flex items-center hover:bg-black/5 p-4 transition w-full">
       <div className="group flex gap-x-2 items-start w-full">
         <div onClick={onMemberClick} className="cursor-pointer hover:drop-shadow-md transition">
-          <UserAvatar src={member.profile.imageUrl} />
+          <UserAvatar src={member.profile.image!} />
         </div>
         <div className="flex flex-col w-full">
           <div className="flex items-center gap-x-2">

@@ -10,7 +10,7 @@ const handleAuth = async () => {
     throw new Error("Unauthorized");
   }
   
-  const userId = profile.userId;
+  const userId = profile.email;
 
   return { userId: userId };
 };

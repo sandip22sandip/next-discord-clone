@@ -14,7 +14,7 @@ export async function PATCH(
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
-    const userId = profile.userId;
+    const userId = profile.email;
 
     const course = await db.course.findUnique({
       where: {

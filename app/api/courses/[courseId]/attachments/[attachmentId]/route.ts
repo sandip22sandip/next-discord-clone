@@ -14,7 +14,7 @@ export async function DELETE(
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
-    const userId = profile.userId;
+    const userId = profile?.email;
 
     const courseOwner = await db.course.findUnique({
       where: {

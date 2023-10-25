@@ -23,7 +23,7 @@ import { currentProfile } from "@/lib/current-profile";
 const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
   const profile = await currentProfile();
 
-  const userId = profile?.userId;
+  const userId = profile?.email;
 
   if (!userId) {
     return redirect("/");

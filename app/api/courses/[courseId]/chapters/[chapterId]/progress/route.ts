@@ -14,7 +14,7 @@ export async function PUT(
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
-    const userId = profile.userId;
+    const userId = profile?.email;
 
     const { isCompleted } = await req.json();
 

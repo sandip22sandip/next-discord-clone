@@ -6,17 +6,17 @@ import GoogleProvider from "next-auth/providers/google";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 
 import { db } from "@/lib/db";
-import { Profile } from "@prisma/client";
+import { User } from "@prisma/client";
 
 declare module "next-auth" {
   interface Session {
-    user: Profile;
+    user: User;
   }
 }
 declare module "next-auth/jwt" {
   interface JWT {
     isAdmin: boolean;
-    imageUrl: string;
+    image: string;
   }
 }
 
@@ -34,16 +34,16 @@ export const authOptions: AuthOptions = {
     CredentialsProvider({
       name: "credentials",
       credentials: {
-        userId: { label: "userId", type: "text" },
+        email: { label: "email", type: "text" },
         password: { label: "password", type: "password" },
       },
       async authorize(credentials) {
-        if (!credentials?.userId || !credentials?.password) {
+        if (!credentials?.email || !credentials?.password) {
           throw new Error("Invalid credentials");
         }
 
-        const user = await db.profile.findUnique({
-          where: { userId: credentials.userId },
+        const user = await db.user.findUnique({
+          where: { email: credentials.email },
         });
 
         if (!user || !user?.hashedPassword) {
@@ -72,16 +72,16 @@ export const authOptions: AuthOptions = {
     async session({ token, session }) {
       if (token) {
         session.user.isAdmin = token.isAdmin;
-        session.user.imageUrl = token.imageUrl;
+        session.user.image = token.image;
       }
       return session;
     },
     async jwt({ token }) {
-      const userInDb = await db.profile.findUnique({
-        where: { userId: token.email! },
+      const userInDb = await db.user.findUnique({
+        where: { email: token.email! },
       });
       token.isAdmin = userInDb?.isAdmin!;
-      token.imageUrl = userInDb?.imageUrl!;
+      token.image = userInDb?.image!;
       return token;
     },
   },
