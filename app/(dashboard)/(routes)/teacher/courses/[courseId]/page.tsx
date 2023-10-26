@@ -55,7 +55,7 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
   });
 
   if (!course) {
-    return redirect("/");
+    return redirect("/main");
   }
 
   const requiredFields = [

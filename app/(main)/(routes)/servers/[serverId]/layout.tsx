@@ -29,7 +29,7 @@ const ServerIdLayout = async ({
   });
 
   if (!server) {
-    return redirect("/");
+    return redirect("/main");
   }
   
   return (

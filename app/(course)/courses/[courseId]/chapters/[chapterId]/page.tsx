@@ -39,7 +39,7 @@ const ChapterIdPage = async ({
   });
 
   if (!chapter || !course) {
-    return redirect("/");
+    return redirect("/main");
   }
 
   const isLocked = !chapter.isFree && !purchase;

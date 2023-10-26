@@ -6,7 +6,7 @@ const TeacherLayout = async ({ children }: { children: React.ReactNode }) => {
 
   const isAdmin = profile?.isAdmin;
   if (!isAdmin) {
-    return redirect("/");
+    return redirect("/main");
   }
 
   return <>{children}</>;

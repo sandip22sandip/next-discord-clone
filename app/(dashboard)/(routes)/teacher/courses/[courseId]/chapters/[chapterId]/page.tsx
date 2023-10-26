@@ -37,7 +37,7 @@ const ChapterIdPage = async ({
   });
 
   if (!chapter) {
-    return redirect("/");
+    return redirect("/main");
   }
 
   const requiredFields = [chapter.title, chapter.description, chapter.videoUrl];
