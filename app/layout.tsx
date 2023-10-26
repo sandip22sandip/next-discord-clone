@@ -14,8 +14,8 @@ import { ConfettiProvider } from "@/components/providers/confetti-provider";
 const font = Open_Sans({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Team Chat App",
-  description: "Team Chat App - Discord Clone",
+  title: "LMS App",
+  description: "LMS App",
 };
 
 export default function RootLayout({
