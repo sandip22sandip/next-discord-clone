@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { LogOut } from "lucide-react";
+import { LogOut, LucideMessagesSquare, LucidePenSquare } from "lucide-react";
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
@@ -49,12 +49,14 @@ export const NavbarRoutes = () => {
         ) : isAdmin ? (
           <Link href="/teacher/courses">
             <Button size="sm" variant="ghost">
+              <LucidePenSquare className="w-5 h-5 text-zinc-500 dark:text-zinc-400 mr-2" />
               Teacher mode
             </Button>
           </Link>
         ) : null}
         <Link href="/teamchat">
           <Button size="sm" variant="ghost">
+            <LucideMessagesSquare className="w-5 h-5 text-zinc-500 dark:text-zinc-400 mr-2" />
             Team Chat App
           </Button>
         </Link>

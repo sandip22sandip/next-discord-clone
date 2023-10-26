@@ -96,4 +96,8 @@ Running commands with npm `npm run [command]`
 
 <div className="hidden md:flex h-full w-[72px] z-30 flex-col fixed inset-y-0">
   <NavigationSidebar />
+</div> 
+
+<div className="hidden md:flex h-full w-56 flex-col fixed inset-y-0 z-50 dark:bg-gray-800">
+  <Sidebar />
 </div> -->

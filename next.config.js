@@ -9,7 +9,7 @@ const nextConfig = {
     return config;
   },
   images: {
-    domains: ["uploadthing.com", "utfs.io", "img.clerk.com"],
+    domains: ["uploadthing.com", "utfs.io", "img.clerk.com", "lh3.googleusercontent.com"],
   },
   typescript: {
     ignoreBuildErrors: true,
